@@ -1,4 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
+import { redirect } from "next/navigation";
+import { Router } from "next/router";
+import { toast } from "react-toastify";
 
 type User = {
     accessToken: string
@@ -58,8 +61,11 @@ export default function Login() {
         console.log(mutation.data)
 
         localStorage.setItem('YOUSHARE_USER', JSON.stringify(mutation.data))
-
-        return <h1>success</h1>
+        
+        toast.success('Login successful')
+        setTimeout(() => {
+            window.location.href = '/videos'
+        }, 2000)
     }
 
     if (mutation.isError) {
@@ -138,4 +144,5 @@ export default function Login() {
       </>
     )
   }
+  
   
