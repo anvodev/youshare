@@ -1,5 +1,7 @@
+import UserContext, { UserData } from "@/contexts/UserContext";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface Video {
   id: number;
@@ -15,7 +17,8 @@ interface Video {
   };
 }
 async function fetchVideos(): Promise<Video[]> {
-  const response = await fetch("http://localhost:4000/v1/videos");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const response = await fetch(apiUrl + "/v1/videos");
   if (!response.ok) {
     throw new Error("Failed on get videos request");
   }

@@ -4,7 +4,8 @@ import useWebSocket from "react-use-websocket";
 
 const Notification = () => {
   const [messageHistory, setMessageHistory] = useState([]);
-  const socketUrl = "ws://localhost:4000/v1/ws";
+  const apiUrl = process.env.NEXT_PUBLIC_SOCKET_URL;
+  const socketUrl = apiUrl + "/v1/ws";
   const {
     sendMessage,
     sendJsonMessage,
