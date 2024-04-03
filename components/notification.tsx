@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import UserContext, { UserData } from "@/contexts/UserContext";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useWebSocket from "react-use-websocket";
 
 const Notification = () => {
+  const {user} = useContext(UserContext)
+  const userData = user as unknown as UserData
+
   const [messageHistory, setMessageHistory] = useState([]);
   const apiUrl = process.env.NEXT_PUBLIC_SOCKET_URL;
   const socketUrl = apiUrl + "/v1/ws";
@@ -19,6 +23,9 @@ const Notification = () => {
       const data = JSON.parse(event.data);
       console.log("onMessage", data);
       const video = data.video;
+      if (userData?.user.id === video.author.id || !userData) {
+        return
+      }
       toast(`New video from ${video.author.name}: ${video.title}`);
       setMessageHistory((prev) => prev.concat(data));
     },

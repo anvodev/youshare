@@ -81,7 +81,7 @@ export default function Register() {
 
   if (mutation.isError) {
     console.log(mutation.error);
-    return <h1>error</h1>;
+    toast.error("Register failed");
   }
 
   return (
