@@ -2,13 +2,14 @@ import UserContext, { UserData } from "@/contexts/UserContext";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
+import YouTube from "react-youtube";
 interface Video {
   id: number;
   title: string;
   url: string;
   description: string;
   thumbnail: string;
+  videoId: string;
   created_at: string;
   author: {
     id: number;
@@ -28,10 +29,10 @@ async function fetchVideos(): Promise<Video[]> {
     const url = v.url;
     const videoId = url.split("v=")[1];
     const thumbnailUrl = "https://i.ytimg.com/vi/" + videoId + "/hqdefault.jpg";
-
     return {
       ...v,
       thumbnail: thumbnailUrl,
+      videoId: videoId,
     };
   });
   return videos;
@@ -69,14 +70,6 @@ const Videos = () => {
                   key={video.id}
                   className="relative isolate flex flex-col gap-8 lg:flex-row"
                 >
-                  <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
-                    <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
-                    />
-                    <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
-                  </div>
                   <div>
                     <div className="flex items-center gap-x-4 text-xs">
                       <time
@@ -96,6 +89,11 @@ const Videos = () => {
                       <p className="mt-5 text-sm leading-6 text-gray-600">
                         {video.description}
                       </p>
+                    </div>
+                    <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
+                      <YouTube
+                        videoId={video.videoId}
+                      />
                     </div>
                     <div className="mt-6 flex border-t border-gray-900/5 pt-6">
                       <div className="relative flex items-center gap-x-4">
