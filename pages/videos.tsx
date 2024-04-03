@@ -8,6 +8,11 @@ interface Video {
   description: string;
   thumbnail: string;
   created_at: string;
+  author: {
+    id: number;
+    name: string;
+    email: string;
+  };
 }
 async function fetchVideos(): Promise<Video[]> {
   const response = await fetch("http://localhost:4000/v1/videos");
@@ -93,14 +98,14 @@ const Videos = () => {
                       <div className="relative flex items-center gap-x-4">
                         <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
                           <span className="text-gray-600 text-lg font-bold">
-                            AV
+                            {video.author.name[0]}
                           </span>
                         </div>
                         <div className="text-sm leading-6">
                           <p className="font-semibold text-gray-900">
                             <a href="#">
                               <span className="absolute inset-0" />
-                              Author
+                              {video.author.name}
                             </a>
                           </p>
                         </div>

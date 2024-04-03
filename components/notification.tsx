@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useWebSocket from "react-use-websocket";
 
-const WebSocket = () => {
+const Notification = () => {
   const [messageHistory, setMessageHistory] = useState([]);
   const socketUrl = "ws://localhost:4000/v1/ws";
   const {
@@ -18,7 +18,7 @@ const WebSocket = () => {
       const data = JSON.parse(event.data);
       console.log("onMessage", data);
       const video = data.video;
-      toast(`New video:\n ${video.title}, id: ${video.id}`);
+      toast(`New video from ${video.author.name}: ${video.title}`);
       setMessageHistory((prev) => prev.concat(data));
     },
     onClose: () => console.log("Disconnected!"),
@@ -38,13 +38,7 @@ const WebSocket = () => {
     lastMessage && setMessageHistory((prev) => prev.concat(lastMessage.data));
   }, [lastMessage]);
 
-  return (
-    <div>
-      <h1>WebSocket</h1>
-      <h2>ReadyState: {readyStateString[readyState]}</h2>
-      <p>Message history: {JSON.stringify(messageHistory)}</p>
-    </div>
-  );
+  return <></>
 };
 
-export default WebSocket;
+export default Notification;
