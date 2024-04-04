@@ -73,11 +73,11 @@ export default function Share() {
     mutationFn: shareVideo,
   });
 
-  if (!userData) {
-    setTimeout(() => {
-      router.push("/login");
-    }, 1);
-  }
+  // if (!userData) {
+  //   setTimeout(() => {
+  //     router.push("/login");
+  //   }, 1);
+  // }
 
   const isYouTubeUrlValid = (url: string) => {
     const pattern =

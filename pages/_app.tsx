@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import UserProvider from "@/contexts/UserProvider";
 import Navbar from "@/components/Navbar";
 import { useRouter } from "next/router";
-import Notification from "@/components/Notification";
+import WebSocket from "@/components/WebSocket";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
         {!isAuthPage && <Navbar />}
         <Component {...pageProps} />
         <ToastContainer />
-        <Notification />
+        <WebSocket />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </UserProvider>

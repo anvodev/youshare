@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useWebSocket from "react-use-websocket";
 
-const Notification = () => {
+export default function WebSocket() {
   const {user} = useContext(UserContext)
   const userData = user as unknown as UserData
 
@@ -48,5 +48,3 @@ const Notification = () => {
 
   return <></>
 };
-
-export default Notification;

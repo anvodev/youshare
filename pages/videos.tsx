@@ -42,7 +42,6 @@ const Videos = () => {
     isLoading,
     data: videos,
     isError,
-    error,
   } = useQuery<Video[], Error>({ queryKey: ["videos"], queryFn: fetchVideos });
   console.log("videos", videos);
   if (isLoading) {
