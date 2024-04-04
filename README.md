@@ -1,40 +1,89 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Youtube Sharing App
+This project having 2 repos:
 
-## Getting Started
+FE: https://github.com/votanlean/youshare
+
+BE: https://github.com/votanlean/youshare-api
+
+## Live Demo
+Demo Link: https://youshare.vercel.app/
+
+Demo Video: https://www.loom.com/share/7487e9cff9894cf59b9ba9f505e7945a?sid=92b1bfa1-e384-4aef-958c-04626a52ec6d
+
+## Main features
+- [ x ] Login
+- [ x ] Register
+- [ x ] View all videos
+- [ x ] Share a youtube link
+- [ x ] Get notification from newly added video via websocket
+
+### Todo:
+- [ ] User see new video instead of just new notification
+- [ ] Unit test frontend
+- [ ] Cover test backend
+- [ ] Handle TLS versions for websocket connection
+- [ ] Cache video
+- [ ] Use queue to notify users asynchronously when heavy load on server
+
+
+## Development - Frontend
+(Repo: https://github.com/votanlean/youshare)
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Environment Variables
+```bash
+NEXT_PUBLIC_API_URL=http://localhost:4000 # golang api
+NEXT_PUBLIC_SOCKET_URL=ws://localhost:4000 # websocket api
+NEXT_PUBLIC_GOOGLE_API_KEY=GOOGLE_API_KEY #for youtube api
+```
+You can change them or use the default one in the .env file
+If you want to use .env in your localhost, clone it to .env.local
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Development - Backend
+(Repo: https://github.com/votanlean/youshare-api)
+Language: Golang.
+I almost develop the CRUD and Websocket by builtin Golang function and just a few lightweight libraries
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+I've have add both unittest and integration test with testing database setup. However due to the time constraint I cannot cover the test coverage. So I just add the minimun test to showcase the test setup.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To run the project:
+If you use makefile, you can run
+```bash
+make up # run the docker to get Postgres and create seed database
+make down # remove docker and database
+make run # run the project
+```
+Other wise you can directly run:
+```bash
+docker-compose -f deployments/docker-compose.dev.yml up -d
+docker-compose -f deployments/docker-compose.dev.yml up
+go run ./cmd/api # run the project
+go build ./cmd/api # build the binary file
+```
+The localhost server is at [http://localhost:4000](http://localhost:4000)
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
+The frontend is deployed to Vercel at https://youshare.vercel.app/
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The backend is deployed to Digital Ocean and at domain https://youshare-api.anvo.dev/
 
-## Deploy on Vercel
+Note that the backend is not stable because I have some troubles dealing with the postgres root user escalation bug when using Systemctl for detach process, as well as TLS for websocket 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+In the localhost it works fine (as seen in demo video)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+
+
+

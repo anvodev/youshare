@@ -174,7 +174,6 @@ export default function Register() {
                   Login
                 </Link>
               </p>
-              <p className="mt-10 text-center text-sm text-gray-500">Default user: alice@example.com, password: pa55word</p>
             </div>
           </div>
         </div>

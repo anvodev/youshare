@@ -78,8 +78,7 @@ export default function Login() {
   }
 
   if (mutation.isError) {
-    console.log(mutation.error);
-    return <h1>error</h1>;
+    toast.error("Login failed");
   }
 
   return (
@@ -153,9 +152,6 @@ export default function Login() {
                 >
                   Register
                 </Link>
-              </p>
-              <p className="mt-10 text-center text-sm text-gray-500">
-                Default user: alice@example.com, password: pa55word
               </p>
             </div>
           </div>
